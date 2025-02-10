@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState , useEffect } from 'react'
 import './App.css'
 
 async function getData(pokemon) {
@@ -11,7 +9,7 @@ async function getData(pokemon) {
 }
 
 function getImg(data){
-  return data.img;
+  return data.sprites.front_default;
 }
 
 function getName(data){
@@ -19,9 +17,16 @@ function getName(data){
 }
 
 function App() {
-  const pokemon = 'pikachu';
-  const data = getData(pokemon);
-  console.log(getName(data));
+  const [pokemon, setPokemon] = useState('pikachu');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData(pokemon);
+      console.log(getImg(data));
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
