@@ -1,38 +1,70 @@
-import { useState , useEffect } from 'react'
-import './App.css'
+import { useState } from 'react';
+import Card from './Card.jsx';
+import './App.css';
 
-async function getData(pokemon) {
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-  const data = await response.json();
-  return data;
-}
+const initialPokemons = [
+  'pikachu', 'bulbasaur', 'squirtle', 'charmander', 'pidgey', 'rattata', 
+  'snorlax', 'nidorina', 'vulpix', 'jigglypuff', 'zubat', 'oddish', 
+  'diglett', 'meowth', 'psyduck', 'mankey', 'abra', 'bellsprout', 
+  'geodude', 'voltorb',
+];
 
-function getImg(data){
-  return data.sprites.front_default;
-}
+function shuffle(array) {
+  const shuffledArray = array; 
+  let currentIndex = shuffledArray.length;
 
-function getName(data){
-  return data.name;
+  while (currentIndex !== 0) {
+    const randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [shuffledArray[currentIndex], shuffledArray[randomIndex]] = [
+      shuffledArray[randomIndex], shuffledArray[currentIndex],
+    ];
+  }
+
+  return shuffledArray; 
 }
 
 function App() {
-  const [pokemon, setPokemon] = useState('pikachu');
+  const [pokemons, setPokemons] = useState([
+    'pikachu', 'bulbasaur', 'squirtle', 'charmander', 'pidgey', 'rattata', 
+    'snorlax', 'nidorina', 'vulpix', 'jigglypuff', 'zubat', 'oddish', 
+    'diglett', 'meowth', 'psyduck', 'mankey', 'abra', 'bellsprout', 
+    'geodude', 'voltorb',
+  ]);
+  const [count, setCount] = useState(0);
+  const [record, setRecord] = useState(0);
+  const [allFalse, setAllFalse] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData(pokemon);
-      console.log(getImg(data));
-    };
-
-    fetchData();
-  }, []);
+  const updateParent = (state) => {
+    if (state === true) {
+      setAllFalse(false);
+      setCount((prevCount) => prevCount + 1); // Atualiza o contador
+      setPokemons(shuffle(pokemons)); // Embaralha e atualiza o array
+    }
+    if (state === false) {
+      if(count > record){
+        setRecord(count);
+      }
+      setCount(0); 
+      setPokemons(shuffle(initialPokemons));
+      setAllFalse(true);
+    }
+  };
 
   return (
     <>
-     
+      <div className='header'>
+        <div>Pokemon Card Game</div>
+        <div>Count: {count}</div>
+        <div>Record: {record}</div>
+      </div>
+      <div className='cards'>
+        {pokemons.map((pokemon) => (
+          <Card key={pokemon} pokemon={pokemon} updateParent={updateParent} allFalse={allFalse}/>
+        ))}
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

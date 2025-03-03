@@ -1,0 +1,20 @@
+.poke {
+  text-align: center;
+  border: 2px solid #000;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  margin: 8px;
+  transition: transform 0.2s ease
+}
+
+.poke:hover {
+  background-color: white;
+  color: black;
+  transform: scale(1.1);
+
+}
+
+.poke:active {
+  transform: scale(0.9);
+
+}
