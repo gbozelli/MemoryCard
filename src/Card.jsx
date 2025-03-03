@@ -28,7 +28,7 @@ function Card(props) {
   
   useEffect(() => {
   if (props.allFalse === true) {
-    setClick(false); // Atualiza o estado apenas quando `allFalse` mudar
+    setClick(false);
   }
 }, [props.allFalse]);
 

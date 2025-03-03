@@ -38,8 +38,8 @@ function App() {
   const updateParent = (state) => {
     if (state === true) {
       setAllFalse(false);
-      setCount((prevCount) => prevCount + 1); // Atualiza o contador
-      setPokemons(shuffle(pokemons)); // Embaralha e atualiza o array
+      setCount((prevCount) => prevCount + 1); 
+      setPokemons(shuffle(pokemons));
     }
     if (state === false) {
       if(count > record){
