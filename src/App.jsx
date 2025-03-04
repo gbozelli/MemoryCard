@@ -81,7 +81,7 @@ function App() {
         <div>Record: {record}</div>
       </div>
         <div className='cards'>
-          {pokemons.map((pokemon, index) => (
+          {pokemons.map((pokemon) => (
             <Card key={pokemon.name} pokemon={pokemon.name} img={pokemon.sprites.front_default} updateParent={updateParent} allFalse={allFalse} />
           ))}
         </div>
